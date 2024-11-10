@@ -1,0 +1,5 @@
+INSERT INTO workouts (workout_type, duration, calories_burned, date, user_id)
+VALUES
+('Running', 30, 300, '2024-10-01', 1),
+('Weightlifting', 45, 250, '2024-10-01', 1),
+('Cycling', 60, 450, '2024-10-02', 2);

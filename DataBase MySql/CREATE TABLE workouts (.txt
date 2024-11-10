@@ -1,0 +1,9 @@
+CREATE TABLE workouts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    workout_type VARCHAR(50) NOT NULL,
+    duration INT NOT NULL,  -- Duration in minutes
+    calories_burned INT,    -- Optional field for calories burned
+    date DATE NOT NULL,
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

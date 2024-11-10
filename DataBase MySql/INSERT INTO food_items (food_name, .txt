@@ -1,0 +1,6 @@
+INSERT INTO food_items (food_name, calories, protein, carbs, fats)
+VALUES
+('Chicken Breast', 165, 31, 0, 3.6),
+('Brown Rice', 111, 2.6, 23, 0.9),
+('Broccoli', 55, 3.7, 11, 0.3),
+('Almonds', 579, 21, 22, 49);

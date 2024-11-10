@@ -1,0 +1,6 @@
+INSERT INTO nutrition_logs (food_item, calories, protein, carbs, fats, date, user_id)
+VALUES
+('Chicken Breast', 165, 31, 0, 3.6, '2024-10-01', 1),
+('Brown Rice', 111, 2.6, 23, 0.9, '2024-10-01', 1),
+('Broccoli', 55, 3.7, 11, 0.3, '2024-10-01', 1),
+('Almonds', 579, 21, 22, 49, '2024-10-02', 2);

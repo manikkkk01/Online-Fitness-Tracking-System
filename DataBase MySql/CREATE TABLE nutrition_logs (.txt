@@ -1,0 +1,11 @@
+CREATE TABLE nutrition_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    food_item VARCHAR(50) NOT NULL,
+    calories INT NOT NULL,
+    protein FLOAT,        -- Protein in grams
+    carbs FLOAT,          -- Carbs in grams
+    fats FLOAT,           -- Fats in grams
+    date DATE NOT NULL,
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

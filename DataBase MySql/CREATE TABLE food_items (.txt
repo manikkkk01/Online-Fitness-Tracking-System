@@ -1,0 +1,8 @@
+CREATE TABLE food_items (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    food_name VARCHAR(100) NOT NULL UNIQUE,
+    calories INT NOT NULL,      -- Calories per 100g or per serving
+    protein FLOAT,              -- Protein per 100g or per serving
+    carbs FLOAT,                -- Carbs per 100g or per serving
+    fats FLOAT                  -- Fats per 100g or per serving
+);

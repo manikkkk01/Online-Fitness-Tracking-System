@@ -1,0 +1,2 @@
+SELECT * FROM workouts
+WHERE user_id = 1 AND date BETWEEN '2024-10-01' AND '2024-10-07';
