@@ -1,0 +1,10 @@
+AWS (Amazon Web Services) offers a variety of tools for deploying applications. In this case, we'll use AWS EC2 (Elastic Compute Cloud) for hosting your application and RDS (Relational Database Service) for managing the MySQL database.
+
+Step 1: Set up an AWS EC2 instance
+Log in to AWS Console: Go to AWS Management Console and sign in with your AWS credentials.
+Launch an EC2 Instance:
+In the EC2 Dashboard, click on Launch Instance.
+Choose an AMI (Amazon Machine Image), for example, a Ubuntu or Amazon Linux.
+Choose an instance type like t2.micro (free tier eligible).
+Configure instance details and add a security group (ensure that port 22 for SSH and port 80 for HTTP are open).
+Launch the instance and generate/download a key pair for SSH access.
