@@ -1,0 +1,20 @@
+package com.example.fitnesstracker.model;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+public class Workout {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String workoutType;
+    private int duration;
+    private LocalDate date;
+
+    @ManyToOne
+    private User user;
+
+    // Getters and setters omitted for brevity
+}
