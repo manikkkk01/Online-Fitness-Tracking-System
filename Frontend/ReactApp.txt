@@ -1,0 +1,15 @@
+import React from 'react';
+import User from './components/User';
+import Workout from './components/Workout';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Fitness Tracker</h1>
+      <User />
+      <Workout />
+    </div>
+  );
+}
+
+export default App;

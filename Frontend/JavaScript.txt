@@ -1,0 +1,8 @@
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("root").innerHTML = `
+    <div class="container">
+      <h1>Welcome to the Fitness Tracker</h1>
+      <button onclick="alert('Feature coming soon!')">Track Your Workout</button>
+    </div>
+  `;
+});

@@ -1,0 +1,25 @@
+import React, { useState } from 'react';
+
+function Workout() {
+  const [workout, setWorkout] = useState('');
+
+  const handleTrackWorkout = () => {
+    alert(`Tracking workout: ${workout}`);
+    setWorkout('');
+  };
+
+  return (
+    <div className="card">
+      <h2>Track Workout</h2>
+      <input 
+        type="text" 
+        value={workout} 
+        onChange={(e) => setWorkout(e.target.value)} 
+        placeholder="Enter workout type" 
+      />
+      <button onClick={handleTrackWorkout}>Track Workout</button>
+    </div>
+  );
+}
+
+export default Workout;
