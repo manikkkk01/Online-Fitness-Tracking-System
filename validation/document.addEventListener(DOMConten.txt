@@ -1,0 +1,35 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("#registrationForm");
+
+    form.addEventListener("submit", (event) => {
+        const email = document.querySelector("#email");
+        const password = document.querySelector("#password");
+        const confirmPassword = document.querySelector("#confirmPassword");
+        let isValid = true;
+
+        if (!/^\S+@\S+\.\S+$/.test(email.value)) {
+            email.classList.add("is-invalid");
+            isValid = false;
+        } else {
+            email.classList.remove("is-invalid");
+        }
+
+        if (password.value.length < 6) {
+            password.classList.add("is-invalid");
+            isValid = false;
+        } else {
+            password.classList.remove("is-invalid");
+        }
+
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.classList.add("is-invalid");
+            isValid = false;
+        } else {
+            confirmPassword.classList.remove("is-invalid");
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+});

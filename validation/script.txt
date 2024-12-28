@@ -1,0 +1,21 @@
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('#registrationForm');
+        form.addEventListener('submit', (e) => {
+            const email = document.querySelector('#email').value.trim();
+            const password = document.querySelector('#password').value.trim();
+            const confirmPassword = document.querySelector('#confirmPassword').value.trim();
+
+            if (!/\S+@\S+\.\S+/.test(email)) {
+                alert('Invalid email format!');
+                e.preventDefault();
+            } else if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                e.preventDefault();
+            } else if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                e.preventDefault();
+            }
+        });
+    });
+</script>
