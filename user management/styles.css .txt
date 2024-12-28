@@ -1,0 +1,18 @@
+/* styles.css */
+body {
+    background-color: #f8f9fa;
+}
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #343a40;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.container {
+    margin-top: 50px;
+}
