@@ -1,0 +1,15 @@
+@Entity
+public class FitnessData {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long userId;
+    private Integer steps;
+    private Double caloriesBurned;
+    private Integer workoutDuration;
+
+    // Getters and Setters
+    // ...
+}
