@@ -1,0 +1,5 @@
+@Entity // Marks a class as a JPA entity mapped to a database table.
+@Id // Specifies the primary key of the entity.
+@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates the primary key value.
+@NotNull // Ensures the field is not null.
+@Min // Validates that the field value meets the minimum threshold.

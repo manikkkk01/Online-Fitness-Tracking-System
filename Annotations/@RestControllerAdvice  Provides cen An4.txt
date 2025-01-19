@@ -1,0 +1,2 @@
+@RestControllerAdvice // Provides centralized exception handling for REST controllers.
+@ExceptionHandler // Defines the type of exception to handle in a method.

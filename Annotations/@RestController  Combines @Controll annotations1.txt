@@ -1,0 +1,7 @@
+@RestController // Combines @Controller and @ResponseBody for handling RESTful endpoints.
+@RequestMapping("/api/fitness") // Maps HTTP requests to the specified path for this controller.
+@PostMapping // Maps POST requests to specific methods.
+@GetMapping // Maps GET requests to specific methods.
+@PathVariable // Extracts variables from the URL path.
+@RequestBody // Maps the body of the HTTP request to a method parameter.
+@Valid // Triggers validation on the annotated parameter or field.
