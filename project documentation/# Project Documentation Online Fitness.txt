@@ -1,0 +1,225 @@
+# Project Documentation: Online Fitness Tracker
+
+## 1. **Introduction**
+The Online Fitness Tracker is a web-based application designed to assist users in tracking and managing their fitness progress. The system allows users to log daily fitness activities such as steps taken, calories burned, and workout duration. It also provides insightful analytics to help users monitor their progress over time.
+
+---
+
+## 2. **System Architecture**
+
+### **High-Level Architecture**
+- **Frontend**: React/Angular (for user interface design).
+- **Backend**: Spring Boot (for API development and business logic).
+- **Database**: MySQL (for data storage).
+- **Cloud Deployment**: AWS (for hosting the application).
+- **CI/CD**: GitHub Actions integrated with Docker.
+
+### **System Components**
+- **User Management**: Handles user registration, login, and profile management.
+- **Fitness Tracking**: Enables users to log and view daily activity data.
+- **Analytics and Reporting**: Generates reports on user progress over time.
+- **Admin Dashboard**: Provides tools for managing users and data.
+
+---
+
+## 3. **Features**
+
+1. **User Registration and Login**
+   - Secure user authentication using Spring Security.
+   - Role-based access control (Admin/User).
+
+2. **Fitness Data Management**
+   - Log fitness data (steps, calories, workout duration).
+   - Retrieve historical data for analysis.
+
+3. **Progress Analytics**
+   - Graphs and reports to visualize user progress.
+   - Comparison of weekly, monthly, and yearly performance.
+
+4. **Admin Dashboard**
+   - Manage users and monitor their activity.
+   - View platform-wide usage statistics.
+
+---
+
+## 4. **Technologies Used**
+
+| Component       | Technology            |
+|-----------------|-----------------------|
+| **Frontend**    | React/Angular, HTML, CSS, JavaScript |
+| **Backend**     | Spring Boot, Spring Security |
+| **Database**    | MySQL                |
+| **Containerization** | Docker               |
+| **CI/CD**       | GitHub Actions       |
+| **Cloud**       | AWS (EC2, S3, RDS)  |
+
+---
+
+## 5. **Implementation Details**
+
+### **Controller Layer**
+- Handles incoming HTTP requests and maps them to the appropriate service methods.
+- Example:
+
+```java
+@RestController
+@RequestMapping("/api/fitness")
+public class FitnessTrackerController {
+
+    @Autowired
+    private FitnessService fitnessService;
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addFitnessData(@RequestBody @Valid FitnessDataRequest request) {
+        fitnessService.addFitnessData(request);
+        return ResponseEntity.ok("Fitness data added successfully!");
+    }
+}
+```
+
+### **Service Layer**
+- Implements business logic and interacts with the repository layer.
+- Example:
+
+```java
+@Service
+public class FitnessService {
+
+    @Autowired
+    private FitnessRepository fitnessRepository;
+
+    public void addFitnessData(FitnessDataRequest request) {
+        FitnessData fitnessData = new FitnessData();
+        fitnessData.setUserId(request.getUserId());
+        fitnessData.setSteps(request.getSteps());
+        fitnessData.setCaloriesBurned(request.getCaloriesBurned());
+        fitnessData.setWorkoutDuration(request.getWorkoutDuration());
+        fitnessRepository.save(fitnessData);
+    }
+}
+```
+
+### **Repository Layer**
+- Responsible for interacting with the database.
+- Example:
+
+```java
+@Repository
+public interface FitnessRepository extends JpaRepository<FitnessData, Long> {
+    Optional<List<FitnessData>> findByUserId(Long userId);
+}
+```
+
+### **Validation**
+- Ensures data integrity using annotations.
+- Example:
+
+```java
+public class FitnessDataRequest {
+
+    @NotNull(message = "User ID is required")
+    private Long userId;
+
+    @Min(value = 0, message = "Steps must be a positive number")
+    private Integer steps;
+
+    @Min(value = 0, message = "Calories burned must be a positive number")
+    private Double caloriesBurned;
+
+    @Min(value = 0, message = "Workout duration must be a positive number")
+    private Integer workoutDuration;
+}
+```
+
+### **Exception Handling**
+- Handles errors and provides meaningful responses.
+- Example:
+
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error -> 
+            errors.put(error.getField(), error.getDefaultMessage())
+        );
+        return ResponseEntity.badRequest().body(errors);
+    }
+}
+```
+
+---
+
+## 6. **Testing**
+
+### Unit Testing with JUnit and Mockito
+- Example:
+
+```java
+@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+public class FitnessServiceTest {
+
+    @InjectMocks
+    private FitnessService fitnessService;
+
+    @Mock
+    private FitnessRepository fitnessRepository;
+
+    @Test
+    public void testAddFitnessData() {
+        FitnessDataRequest request = new FitnessDataRequest();
+        request.setUserId(1L);
+        request.setSteps(5000);
+        request.setCaloriesBurned(250.0);
+        request.setWorkoutDuration(30);
+
+        FitnessData fitnessData = new FitnessData();
+        fitnessData.setId(1L);
+        fitnessData.setUserId(request.getUserId());
+        fitnessData.setSteps(request.getSteps());
+        fitnessData.setCaloriesBurned(request.getCaloriesBurned());
+        fitnessData.setWorkoutDuration(request.getWorkoutDuration());
+
+        Mockito.when(fitnessRepository.save(Mockito.any(FitnessData.class))).thenReturn(fitnessData);
+        fitnessService.addFitnessData(request);
+        Mockito.verify(fitnessRepository, Mockito.times(1)).save(Mockito.any(FitnessData.class));
+    }
+}
+```
+
+---
+
+## 7. **Deployment**
+
+### Steps to Deploy on AWS
+1. **Build the Application**: Package the Spring Boot application into a JAR file using Maven.
+2. **Dockerize the Application**:
+    ```dockerfile
+    FROM openjdk:17-jdk-slim
+    COPY target/fitness-tracker.jar app.jar
+    ENTRYPOINT ["java", "-jar", "app.jar"]
+    ```
+3. **Push to AWS EC2**:
+    - Set up an EC2 instance.
+    - Install Docker on the instance.
+    - Pull and run the Docker image.
+4. **Database Setup**:
+    - Use AWS RDS to configure the MySQL database.
+5. **Domain and Load Balancer**:
+    - Configure a load balancer and map it to a domain name.
+
+---
+
+## 8. **Future Enhancements**
+- Integration with wearable devices (e.g., Fitbit, Apple Watch).
+- AI-based fitness recommendations.
+- Social sharing of fitness achievements.
+- Gamification features (e.g., badges, challenges).
+
+---
+
+## 9. **Screenshots and Diagrams**
+- Include screenshots of the user interface and architectural diagrams (to be added during implementation).
