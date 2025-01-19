@@ -1,0 +1,4 @@
+@Repository
+public interface FitnessRepository extends JpaRepository<FitnessData, Long> {
+    Optional<List<FitnessData>> findByUserId(Long userId);
+}

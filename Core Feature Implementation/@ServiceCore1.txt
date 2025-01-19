@@ -1,0 +1,22 @@
+@Service
+public class FitnessService {
+
+    @Autowired
+    private FitnessRepository fitnessRepository;
+
+    // Method to add fitness data
+    public void addFitnessData(FitnessDataRequest request) {
+        FitnessData fitnessData = new FitnessData();
+        fitnessData.setUserId(request.getUserId());
+        fitnessData.setSteps(request.getSteps());
+        fitnessData.setCaloriesBurned(request.getCaloriesBurned());
+        fitnessData.setWorkoutDuration(request.getWorkoutDuration());
+        fitnessRepository.save(fitnessData);
+    }
+
+    // Method to get fitness data by user ID
+    public List<FitnessData> getFitnessDataByUserId(Long userId) {
+        return fitnessRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Fitness data not found for user ID: " + userId));
+    }
+}
