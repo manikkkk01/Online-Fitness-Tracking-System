@@ -1,0 +1,21 @@
+@RestController
+@RequestMapping("/api/fitness")
+public class FitnessTrackerController {
+
+    @Autowired
+    private FitnessService fitnessService;
+
+    // Endpoint to add fitness data
+    @PostMapping("/add")
+    public ResponseEntity<String> addFitnessData(@RequestBody @Valid FitnessDataRequest request) {
+        fitnessService.addFitnessData(request);
+        return ResponseEntity.ok("Fitness data added successfully!");
+    }
+
+    // Endpoint to retrieve all fitness data for a user
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<FitnessData>> getUserFitnessData(@PathVariable Long userId) {
+        List<FitnessData> data = fitnessService.getFitnessDataByUserId(userId);
+        return ResponseEntity.ok(data);
+    }
+}
