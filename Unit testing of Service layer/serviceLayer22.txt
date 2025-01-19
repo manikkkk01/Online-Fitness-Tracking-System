@@ -1,0 +1,61 @@
+@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+public class FitnessServiceTest {
+
+    @InjectMocks
+    private FitnessService fitnessService;
+
+    @Mock
+    private FitnessRepository fitnessRepository;
+
+    @Test
+    public void testAddFitnessData() {
+        // Mocking request
+        FitnessDataRequest request = new FitnessDataRequest();
+        request.setUserId(1L);
+        request.setSteps(5000);
+        request.setCaloriesBurned(250.0);
+        request.setWorkoutDuration(30);
+
+        // Mocking entity
+        FitnessData fitnessData = new FitnessData();
+        fitnessData.setId(1L);
+        fitnessData.setUserId(request.getUserId());
+        fitnessData.setSteps(request.getSteps());
+        fitnessData.setCaloriesBurned(request.getCaloriesBurned());
+        fitnessData.setWorkoutDuration(request.getWorkoutDuration());
+
+        // Stubbing repository
+        Mockito.when(fitnessRepository.save(Mockito.any(FitnessData.class))).thenReturn(fitnessData);
+
+        // Call service method
+        fitnessService.addFitnessData(request);
+
+        // Verify interactions
+        Mockito.verify(fitnessRepository, Mockito.times(1)).save(Mockito.any(FitnessData.class));
+    }
+
+    @Test
+    public void testGetFitnessDataByUserId() {
+        // Mock data
+        FitnessData fitnessData = new FitnessData();
+        fitnessData.setId(1L);
+        fitnessData.setUserId(1L);
+        fitnessData.setSteps(5000);
+        fitnessData.setCaloriesBurned(250.0);
+        fitnessData.setWorkoutDuration(30);
+
+        List<FitnessData> mockDataList = List.of(fitnessData);
+
+        // Stubbing repository
+        Mockito.when(fitnessRepository.findByUserId(1L)).thenReturn(Optional.of(mockDataList));
+
+        // Call service method
+        List<FitnessData> result = fitnessService.getFitnessDataByUserId(1L);
+
+        // Assertions
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals(1L, result.get(0).getUserId());
+    }
+}
